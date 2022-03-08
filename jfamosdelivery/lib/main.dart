@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jfamosdelivery/splashscreen.dart';
+import 'package:jfamosdelivery/Screens/splashscreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +14,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home: const SplashScreen(),
+      home: const Scaffold(
+        body: SplashScreen(),
+        backgroundColor: Colors.indigo,
+      ),
     );
   }
 }
