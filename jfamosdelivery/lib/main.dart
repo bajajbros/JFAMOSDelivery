@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jfamosdelivery/Screens/splashscreen.dart';
+import 'package:jfamosdelivery/Screens/drawer/profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,13 +10,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'JFamos Delivery',
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
-      ),
-      home: const Scaffold(
-        body: SplashScreen(),
-        backgroundColor: Colors.indigo,
+      home: MaterialApp(
+        theme: ThemeData(
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: const Scaffold(
+          body: ProfileScreen(),
+        ),
       ),
     );
   }
