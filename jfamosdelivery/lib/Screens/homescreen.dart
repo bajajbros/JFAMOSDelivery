@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:jfamosdelivery/Screens/drawer/about.dart';
+import 'package:jfamosdelivery/Screens/drawer/contact.dart';
+import 'package:jfamosdelivery/Screens/drawer/historyscreen.dart';
+import 'package:jfamosdelivery/Screens/drawer/howtouse.dart';
+import 'package:jfamosdelivery/Screens/drawer/legal.dart';
+import 'package:jfamosdelivery/Screens/drawer/payment/paymentscreen.dart';
 import 'package:jfamosdelivery/Screens/drawer/profile.dart';
+import 'package:jfamosdelivery/Screens/drawer/termsandconditions.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -27,7 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         builder: (context) => const ProfileScreen()));
               },
               child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.12,
+                height: 180,
+                width: double.infinity,
                 child: DrawerHeader(
                   padding: const EdgeInsets.fromLTRB(0, 16, 8, 8),
                   decoration: const BoxDecoration(
@@ -37,36 +45,35 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       CircleAvatar(
-                        radius: 50,
+                        radius: 40,
                         backgroundColor: Colors.grey[200],
                         child: const Icon(
                           Icons.person,
                           color: Colors.grey,
                         ),
                       ),
+                      const SizedBox(width: 16),
                       Center(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Mayank Bajaj',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'fredoka'),
-                              ),
-                              Text(
-                                'Edit profile',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'fredoka',
-                                    color: Colors.grey[500],
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ],
-                          ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Mayank Bajaj',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'fredoka'),
+                            ),
+                            Text(
+                              'Edit profile',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'fredoka',
+                                  color: Colors.grey[500],
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          ],
                         ),
                       )
                     ],
@@ -88,7 +95,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.w400),
               ),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PaymentScreen()));
               },
             ),
             ListTile(
@@ -114,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.black,
               ),
               title: const Text(
-                'Ride History',
+                'History',
                 style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'fredoka',
@@ -122,7 +132,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.w400),
               ),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const HistoryScreen();
+                }));
               },
             ),
             ListTile(
@@ -156,12 +168,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.w400),
               ),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const Terms();
+                }));
               },
             ),
             ListTile(
               leading: const Icon(
-                Icons.credit_card,
+                Icons.contact_phone,
                 color: Colors.black,
               ),
               title: const Text(
@@ -173,7 +187,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.w400),
               ),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const Contact();
+                }));
               },
             ),
             ListTile(
@@ -190,7 +206,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.w400),
               ),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const About()));
               },
             ),
             ListTile(
@@ -207,7 +224,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.w400),
               ),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const HowToUser()));
               },
             ),
             ListTile(
@@ -224,7 +242,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.w400),
               ),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Legal()));
               },
             ),
           ],

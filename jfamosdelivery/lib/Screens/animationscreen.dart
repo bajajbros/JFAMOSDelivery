@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:jfamosdelivery/Screens/homescreen.dart';
 import 'package:lottie/lottie.dart';
 
 class AnimationScreen extends StatefulWidget {
@@ -9,6 +12,23 @@ class AnimationScreen extends StatefulWidget {
 }
 
 class _AnimationScreenState extends State<AnimationScreen> {
+  @override
+  void initState() {
+    Timer(const Duration(seconds: 4), () {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => const HomeScreen()));
+    });
+
+    super.initState();
+  }
+
+  // navigation() {
+  //   Timer(const Duration(seconds: 4), () {
+  //     Navigator.of(context).push(MaterialPageRoute(
+  //         builder: (BuildContext context) => const HomeScreen()));
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

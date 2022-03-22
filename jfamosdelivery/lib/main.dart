@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jfamosdelivery/Screens/drawer/profile.dart';
+import 'package:jfamosdelivery/Screens/splashscreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: const Scaffold(
-          body: ProfileScreen(),
+          body: SplashScreen(),
         ),
       ),
     );

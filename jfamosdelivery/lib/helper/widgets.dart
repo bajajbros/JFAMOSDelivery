@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:jfamosdelivery/helper/consts.dart';
 
 Widget customTextField({
-  double padding = 30,
+  double leftPadding = 30,
+  double rightPadding = 30,
   required TextInputType keyboardType,
   required String hintText,
   required Widget prefixIcon,
@@ -10,7 +11,7 @@ Widget customTextField({
   Widget? suffixIcon,
 }) {
   return Padding(
-    padding: EdgeInsets.symmetric(horizontal: padding),
+    padding: EdgeInsets.only(left: leftPadding, right: rightPadding),
     child: TextFormField(
       obscureText: obsureText,
       enabled: true,
@@ -22,17 +23,19 @@ Widget customTextField({
           fontWeight: FontWeight.normal),
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
-        // errorText: validateMobile(mobiletec.text),
         prefixIconColor: Colors.black,
         border: OutlineInputBorder(
-            borderSide: const BorderSide(color: kGreenColor, width: 2),
-            borderRadius: BorderRadius.circular(12)),
+          borderSide: const BorderSide(color: kGreenColor, width: 2),
+          borderRadius: BorderRadius.circular(12),
+        ),
         enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: kGreenColor, width: 2),
-            borderRadius: BorderRadius.circular(12)),
+          borderSide: const BorderSide(color: kGreenColor, width: 2),
+          borderRadius: BorderRadius.circular(12),
+        ),
         focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: kGreenColor, width: 2),
-            borderRadius: BorderRadius.circular(12)),
+          borderSide: const BorderSide(color: kGreenColor, width: 2),
+          borderRadius: BorderRadius.circular(12),
+        ),
         filled: true,
         hintStyle: const TextStyle(color: Colors.black38, fontSize: 20),
         hintText: hintText,

@@ -66,32 +66,31 @@ class _ProfileScreenState extends State<ProfileScreen>
               children: [
                 Expanded(
                   child: Container(
-                      alignment: Alignment.topLeft,
-
-                      // AppBar().preferredSize.height,
-                      color: kGreenColor,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
-                            Text('My ',
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'fredoka',
-                                    color: Colors.white)),
-                            Text(
-                              '     Profile',
+                    alignment: Alignment.topLeft,
+                    color: kGreenColor,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: const [
+                          Text('My ',
                               style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.w400,
                                   fontFamily: 'fredoka',
-                                  color: Colors.white),
-                            )
-                          ],
-                        ),
-                      )),
+                                  color: Colors.white)),
+                          Text(
+                            '     Profile',
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'fredoka',
+                                color: Colors.white),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
                 Container(
                   height: MediaQuery.of(context).size.height * 0.7,
@@ -313,7 +312,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                       children: [
                         Expanded(
                           child: customTextField(
-                            padding: 16,
+                            leftPadding: 16,
+                            rightPadding: 16,
                             keyboardType: TextInputType.streetAddress,
                             hintText: 'House no',
                             prefixIcon: const Icon(
@@ -324,7 +324,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                         ),
                         Expanded(
                           child: customTextField(
-                            padding: 16,
+                            leftPadding: 16,
+                            rightPadding: 16,
                             keyboardType: TextInputType.streetAddress,
                             hintText: 'Street details',
                             prefixIcon: const Icon(
@@ -409,7 +410,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ),
                       Expanded(
                         child: customTextField(
-                          padding: 16,
+                          leftPadding: 16,
+                          rightPadding: 16,
                           keyboardType: TextInputType.number,
                           hintText: 'Pin Code',
                           prefixIcon: const Icon(
@@ -425,7 +427,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                   ),
                   Expanded(
                     child: customTextField(
-                      padding: 16,
+                      leftPadding: 16,
+                      rightPadding: 16,
                       keyboardType: TextInputType.streetAddress,
                       hintText: 'Area details/landmark to locate you',
                       prefixIcon: const Icon(

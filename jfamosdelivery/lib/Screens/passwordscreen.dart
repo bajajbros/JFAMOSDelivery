@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:jfamosdelivery/Screens/animationscreen.dart';
 import 'package:jfamosdelivery/Screens/createpasswordscreen.dart';
 import 'package:jfamosdelivery/Screens/homescreen.dart';
 import 'package:jfamosdelivery/helper/consts.dart';
@@ -63,7 +64,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                   const Spacer(),
                   const Text('Oops, you forget your password?',
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 12,
                           color: Colors.black,
                           fontFamily: 'fredoka',
                           fontWeight: FontWeight.w400)),
@@ -92,7 +93,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
+                          builder: (context) => const AnimationScreen()));
                 }),
             const SizedBox(height: 40),
             //add a textfield
