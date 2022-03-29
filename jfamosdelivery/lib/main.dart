@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jfamosdelivery/Screens/homescreen.dart';
 import 'package:jfamosdelivery/Screens/splashscreen.dart';
 
 void main() {
@@ -16,9 +17,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: const Scaffold(
-          body: SplashScreen(),
-        ),
+        home: const HomeScreen(),
       ),
     );
   }

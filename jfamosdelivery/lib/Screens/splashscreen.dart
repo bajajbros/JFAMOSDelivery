@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:jfamosdelivery/Screens/onboardingscreens.dart';
+import 'package:jfamosdelivery/backend/apis.dart';
 import 'package:jfamosdelivery/helper/consts.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -11,15 +13,35 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  bool showProgressBar = false;
-  @override
-  void initState() {
-    super.initState();
-    Timer(const Duration(seconds: 4), () {
+  int? seconds;
+  getImageName() async {
+    var data = await splashScreenData();
+    var imageName = jsonDecode(data.toString())[0]['simage'];
+    return imageName;
+  }
+
+  getDuration() async {
+    var data = await splashScreenData();
+    var duration = jsonDecode(data.toString())[0]['sDuration'];
+    return int.parse(duration);
+  }
+
+  showTimer() async {
+    Timer(Duration(seconds: await getDuration()), () {
       Navigator.of(context).push(MaterialPageRoute(
         builder: (BuildContext context) => const Onbording(),
       ));
     });
+  }
+
+  bool showProgressBar = false;
+  @override
+  void initState() {
+    getDuration();
+    splashScreenData();
+    showTimer();
+    super.initState();
+
     Timer(const Duration(seconds: 1), () {
       setState(() {
         showProgressBar = true;
@@ -35,8 +57,14 @@ class _SplashScreenState extends State<SplashScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: Image.asset(
-              'assets/images/logo.png',
+            child: FutureBuilder(
+              builder: (context, snapshot) {
+                return snapshot.data != null
+                    ? Image.network(
+                        'http://jfamoslogistics.com/images/${snapshot.data}')
+                    : Center(child: Container());
+              },
+              future: getImageName(),
             ),
           ),
           showProgressBar
@@ -45,7 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 )
               : const CircularProgressIndicator.adaptive(
                   valueColor: AlwaysStoppedAnimation<Color>(Color(0xff095D2B)),
-                )
+                ),
         ],
       ),
     );

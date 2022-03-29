@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:jfamosdelivery/Screens/animationscreen.dart';
 import 'package:jfamosdelivery/Screens/createpasswordscreen.dart';
-import 'package:jfamosdelivery/Screens/homescreen.dart';
 import 'package:jfamosdelivery/helper/consts.dart';
 import 'package:jfamosdelivery/helper/widgets.dart';
 

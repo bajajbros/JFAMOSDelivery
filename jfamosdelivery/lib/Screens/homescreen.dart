@@ -1,3 +1,4 @@
+import 'package:bottom_drawer/bottom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:jfamosdelivery/Screens/drawer/about.dart';
 import 'package:jfamosdelivery/Screens/drawer/contact.dart';
@@ -6,7 +7,9 @@ import 'package:jfamosdelivery/Screens/drawer/howtouse.dart';
 import 'package:jfamosdelivery/Screens/drawer/legal.dart';
 import 'package:jfamosdelivery/Screens/drawer/payment/paymentscreen.dart';
 import 'package:jfamosdelivery/Screens/drawer/profile.dart';
+import 'package:jfamosdelivery/Screens/drawer/promotions.dart';
 import 'package:jfamosdelivery/Screens/drawer/termsandconditions.dart';
+import 'package:jfamosdelivery/Screens/mapscreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,6 +20,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  // ignore: unused_field
+  bool _isOpened = false;
+  double topContainerHeight = 0.3;
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +122,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.w400),
               ),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const Promotions();
+                }));
               },
             ),
             ListTile(
@@ -249,42 +258,81 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 10,
-                    spreadRadius: 2,
-                  ),
-                ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black,
-                  child: IconButton(
-                    onPressed: () {
-                      _scaffoldKey.currentState?.openDrawer();
-                    },
-                    icon: Icon(
-                      Icons.menu_rounded,
-                      color: Colors.grey[800],
-                    ),
+      body: Stack(children: [
+        const MapScreen(),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                child: IconButton(
+                  onPressed: () {
+                    _scaffoldKey.currentState?.openDrawer();
+                  },
+                  icon: Icon(
+                    Icons.menu_rounded,
+                    color: Colors.grey[800],
                   ),
                 ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+        BottomDrawer(
+          callback: ((opened) {
+            setState(() {
+              _isOpened = opened;
+            });
+          }),
+          cornerRadius: 24,
+          header: Expanded(
+            child: Container(
+              height: 3,
+              width: 15,
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  topRight: Radius.circular(24),
+                ),
+              ),
+            ),
+          ),
+          body: Column(
+            children: const [Text('hi'), Text('hi')],
+          ),
+          headerHeight: MediaQuery.of(context).size.height * 0.25,
+          drawerHeight: MediaQuery.of(context).size.height * 0.75,
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.15),
+              blurRadius: 60,
+              spreadRadius: 5,
+              offset: const Offset(2, -6), // changes position of shadow
+            ),
+          ],
+        ),
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          height: MediaQuery.of(context).size.height * (_isOpened ? 0.3 : 0),
+          color: Colors.white,
+        ),
+      ]),
     );
   }
 }

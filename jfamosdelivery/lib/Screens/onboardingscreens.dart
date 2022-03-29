@@ -13,6 +13,10 @@ class _OnbordingState extends State<Onbording> {
   int currentIndex = 0;
   late PageController _controller;
 
+  // getImageName()async{
+  //   var img = await OnBoardingClass().oimage;
+  //   return img;
+  // }
   @override
   void initState() {
     _controller = PageController(initialPage: 0);
@@ -33,7 +37,7 @@ class _OnbordingState extends State<Onbording> {
           Expanded(
             child: PageView.builder(
               controller: _controller,
-              itemCount: contents.length,
+              // itemCount: contents.length,
               onPageChanged: (int index) {
                 setState(() {
                   currentIndex = index;
@@ -45,12 +49,11 @@ class _OnbordingState extends State<Onbording> {
                   child: Column(
                     children: [
                       Expanded(
-                        child: Image.asset(
-                          contents[i].image!,
-                        ),
+                        child: Image.network(
+                            'www.jfamoslogistics.com/images/${OnBoardingClass().oimage}'),
                       ),
                       Text(
-                        contents[i].title!,
+                        OnBoardingClass().otitle!,
                         style: const TextStyle(
                             fontSize: 40,
                             fontWeight: FontWeight.bold,
@@ -58,7 +61,7 @@ class _OnbordingState extends State<Onbording> {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        contents[i].discription!,
+                        OnBoardingClass().odescription!,
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontSize: 20,
@@ -72,48 +75,48 @@ class _OnbordingState extends State<Onbording> {
               },
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-              contents.length,
-              (index) => buildDot(
-                index,
-                context,
-              ),
-            ),
-          ),
-          Container(
-            height: 60,
-            margin: const EdgeInsets.all(40),
-            width: double.infinity,
-            child: ElevatedButton(
-              child: Text(
-                  currentIndex == contents.length - 1 ? "Continue" : "Next"),
-              onPressed: () {
-                if (currentIndex == contents.length - 1) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const AuthScreen(),
-                    ),
-                  );
-                }
-                _controller.nextPage(
-                  duration: const Duration(milliseconds: 100),
-                  curve: Curves.bounceIn,
-                );
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(kGreenColor),
-                foregroundColor: MaterialStateProperty.all(Colors.white),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-              ),
-            ),
-          )
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: List.generate(
+          //     // contents.length,
+          //     (index) => buildDot(
+          //       index,
+          //       context,
+          //     ),
+          //   ),
+          // ),
+          // Container(
+          //   height: 60,
+          //   margin: const EdgeInsets.all(40),
+          //   width: double.infinity,
+          // child: ElevatedButton(
+          // child: Text(
+          //     // currentIndex == contents.length - 1 ? "Continue" : "Next"),
+          // onPressed: () {
+          //   // if (currentIndex == contents.length - 1) {
+          //     Navigator.pushReplacement(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (_) => const AuthScreen(),
+          //       ),
+          //     );
+          //   }
+          // _controller.nextPage(
+          //   duration: const Duration(milliseconds: 100),
+          //   curve: Curves.bounceIn,
+          // );
+          // },
+          //   style: ButtonStyle(
+          //     backgroundColor: MaterialStateProperty.all(kGreenColor),
+          //     foregroundColor: MaterialStateProperty.all(Colors.white),
+          //     shape: MaterialStateProperty.all(
+          //       RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(30),
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // )
         ],
       ),
     );
@@ -132,39 +135,32 @@ class _OnbordingState extends State<Onbording> {
   }
 }
 
-class UnbordingContent {
-  String? image;
-  String? title;
-  String? discription;
-  Widget? lottie;
+class OnBoardingClass {
+  int? oid;
+  String? oposition;
+  String? otitle;
+  String? odescription;
+  String? oimage;
 
-  UnbordingContent(
-      {this.image,
-      required this.title,
-      required this.discription,
-      this.lottie});
+  OnBoardingClass(
+      {this.oid, this.oposition, this.otitle, this.odescription, this.oimage});
+
+  OnBoardingClass.fromJson(Map<String, dynamic> json) {
+    oid = json['oid'];
+    oposition = json['oposition'];
+    otitle = json['otitle'];
+    odescription = json['odescription'];
+    oimage = json['oimage'];
+  }
+
+  Map<String, dynamic> toJson() {
+    <String, dynamic>{};
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['oid'] = oid;
+    data['oposition'] = oposition;
+    data['otitle'] = otitle;
+    data['odescription'] = odescription;
+    data['oimage'] = oimage;
+    return data;
+  }
 }
-
-List<UnbordingContent> contents = [
-  UnbordingContent(
-      title: 'Quick and Easy',
-      image: 'assets/images/trackyourorder.jpg',
-      discription:
-          "simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the "
-          "industry's standard dummy text ever since the 1500s, "
-          "when an unknown printer took a galley of type and scrambled it "),
-  UnbordingContent(
-      title: 'On Your Tap',
-      image: 'assets/images/easypayment.jpg',
-      discription:
-          "simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the "
-          "industry's standard dummy text ever since the 1500s, "
-          "when an unknown printer took a galley of type and scrambled it "),
-  UnbordingContent(
-      title: 'Affordable',
-      image: 'assets/images/affordable.jpg',
-      discription:
-          "simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the "
-          "industry's standard dummy text ever since the 1500s, "
-          "when an unknown printer took a galley of type and scrambled it "),
-];
