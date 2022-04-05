@@ -1,10 +1,37 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:jfamosdelivery/helper/consts.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
 
-class Contact extends StatelessWidget {
+class Contact extends StatefulWidget {
   const Contact({Key? key}) : super(key: key);
 
+  @override
+  State<Contact> createState() => _ContactState();
+}
+
+class _ContactState extends State<Contact> {
+  Future getData({required String contactType}) async {
+    var api =
+        'http://www.jfamoslogistics.com/APIs/APIs2.asmx/Contact?contacttype=$contactType';
+    var data = await http.get(Uri.parse(api));
+
+    if (data.statusCode == 200) {
+      print(data.body);
+      String detail = await jsonDecode(data.body)[0]['cdetail'];
+      print(detail);
+      return detail;
+    } else {
+      throw Exception('Failed to load data, statusCode: ${data.statusCode}');
+    }
+  }
+
+  String? phoneNumber;
+  String? emailAddress;
+  String? whatsappNumber;
+  String? facebook;
+  String? instagram;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,25 +67,29 @@ class Contact extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16),
             child: GestureDetector(
-              onTap: (() {
-                launch('mailto:jfamosdelivery@gmail.com?subject=&body=');
+              onTap: (() async {
+                String email = await getData(contactType: 'Email');
+                await launch('mailto:$email?subject=&body=');
+                // setState(() {
+                //   email = emailAddress!;
+                // });
               }),
               child: Card(
                 color: kGreenColor,
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: Row(
-                    children: const [
-                      Icon(
+                    children: [
+                      const Icon(
                         Icons.email,
                         color: Colors.white,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       Text(
-                        'jfamosdelivery@gmail.com',
-                        style: TextStyle(
+                        '$emailAddress',
+                        style: const TextStyle(
                             fontSize: 20,
                             fontFamily: 'fredoka',
                             color: Colors.white,
@@ -73,25 +104,26 @@ class Contact extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16),
             child: GestureDetector(
-              onTap: (() {
-                launch('tel:+2347045900640');
+              onTap: (() async {
+                String number = await getData(contactType: 'contactNumber');
+                launch('tel:$number');
               }),
               child: Card(
                 color: kGreenColor,
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: Row(
-                    children: const [
-                      Icon(
+                    children: [
+                      const Icon(
                         Icons.phone,
                         color: Colors.white,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       Text(
-                        '+2347045900640',
-                        style: TextStyle(
+                        '$phoneNumber',
+                        style: const TextStyle(
                             fontSize: 20,
                             fontFamily: 'fredoka',
                             color: Colors.white,
@@ -106,27 +138,27 @@ class Contact extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16),
             child: GestureDetector(
-              onTap: (() {
-                //launch whatsapp
-
-                launch('https://wa.me/2347045900640');
+              onTap: (() async {
+                String number = await getData(contactType: 'whatsapp');
+                await getData(contactType: 'whatsapp');
+                launch('https://wa.me/$number');
               }),
               child: Card(
                 color: kGreenColor,
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: Row(
-                    children: const [
-                      Icon(
+                    children: [
+                      const Icon(
                         Icons.whatsapp,
                         color: Colors.white,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       Text(
-                        '+2348148565541',
-                        style: TextStyle(
+                        '$whatsappNumber',
+                        style: const TextStyle(
                             fontSize: 20,
                             fontFamily: 'fredoka',
                             color: Colors.white,
@@ -141,7 +173,10 @@ class Contact extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16),
             child: GestureDetector(
-              onTap: (() {}),
+              onTap: (() async {
+                String fb = await getData(contactType: 'facebook');
+                launch('https://www.facebook.com/$fb');
+              }),
               child: Card(
                 color: kGreenColor,
                 child: Padding(
@@ -173,12 +208,8 @@ class Contact extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: GestureDetector(
               onTap: (() async {
-                var url = 'https://www.instagram.com/jfamoslogestics/';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  throw 'Could not launch $url';
-                }
+                String insta = await getData(contactType: 'instagram');
+                launch(insta);
               }),
               child: Card(
                 color: kGreenColor,

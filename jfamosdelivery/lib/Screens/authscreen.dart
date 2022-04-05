@@ -1,8 +1,12 @@
-// ignore_for_file: avoid_print
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:jfamosdelivery/Screens/passwordscreen.dart';
+
 import 'package:jfamosdelivery/helper/widgets.dart';
+
+import 'createpasswordscreen.dart';
+import 'passwordscreen.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({
@@ -14,14 +18,89 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  bool errorText = false;
+  showErrorText() async {
+    var lenght = mobiletec.text.length;
+    if (lenght.clamp(9, 11) != lenght) {
+      setState(() {
+        errorText = true;
+      });
+    } else {
+      await login();
+    }
+  }
+
+  Future login() async {
+    String data;
+    int phoneNumber = int.parse(mobiletec.text);
+    var authAPI =
+        'http://www.jfamoslogistics.com/APIs/APIs2.asmx/Login?phone=$phoneNumber';
+    http.Response response = await http.get(
+      Uri.parse(authAPI),
+    );
+    if (response.statusCode == 200) {
+      data = (response.body);
+      print(data);
+      var msg = jsonDecode(data)['message'];
+      if (msg == 'Login Failed.') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CreatePasswordScreen(
+              phoneNumber: mobiletec.text,
+            ),
+          ),
+        );
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PasswordScreen(
+              phoneNumber: mobiletec.text,
+            ),
+          ),
+        );
+      }
+    } else {
+      return (response.statusCode);
+    }
+  }
+
+//Successfully Registered.
+//Successfully Loggedin.
+  // navigate() async {
+  //   String response = await login();
+  //   var msg = jsonDecode(response)['message'];
+  //   if (msg == 'Successfully Registered.') {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) => CreatePasswordScreen(
+  //           phoneNumber: int.parse(mobiletec.text),
+  //         ),
+  //       ),
+  //     );
+  //   } else if (msg == 'Successfully Loggedin.') {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) => PasswordScreen(
+  //           phoneNumber: int.parse(mobiletec.text),
+  //         ),
+  //       ),
+  //     );
+  //   }
+  // }
+
   var buttonEnabled = false;
   final mobiletec = TextEditingController();
 
-  @override
-  void initState() {
-    mobiletec.addListener(onMobileChanged);
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   // mobiletec.addListener(onMobileChanged);
+
+  //   super.initState();
+  // }
 
   void onMobileChanged() {
     var val = mobiletec.text;
@@ -37,27 +116,6 @@ class _AuthScreenState extends State<AuthScreen> {
   void dispose() {
     mobiletec.dispose();
     super.dispose();
-  }
-
-  void onSendForm() {
-    print('sending phone: ${mobiletec.text}');
-  }
-
-  String validateMobile(String value) {
-// Indian Mobile number are of 10 digit only
-    if (value.length != 11) {
-      return 'Mobile Number must be of 11 digit';
-    } else {
-      return "";
-    }
-  }
-
-  Future sendData() async {
-    var url = Uri.parse('www.google.com');
-    http.post(url, body: {'phone': mobiletec.text}).then((response) {
-      print(response.statusCode);
-    });
-    print('sending phone: ${mobiletec.text}');
   }
 
   FocusNode f1 = FocusNode();
@@ -82,6 +140,9 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
               const SizedBox(height: 20),
               customTextField(
+                errorTextMessage: 'Please enter a valid number',
+                errorText: errorText,
+                controller: mobiletec,
                 hintText: 'Mobile Number',
                 keyboardType: TextInputType.number,
                 prefixIcon: Padding(
@@ -113,11 +174,9 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
               customRoundedButton(
                   text: 'Next',
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return const PasswordScreen();
-                    }));
+                  onPressed: () async {
+                    await showErrorText();
+                    // await navigate();
                   }),
               const SizedBox(
                 height: 20,

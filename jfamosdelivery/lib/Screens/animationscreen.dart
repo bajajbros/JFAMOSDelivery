@@ -5,7 +5,9 @@ import 'package:jfamosdelivery/Screens/homescreen.dart';
 import 'package:lottie/lottie.dart';
 
 class AnimationScreen extends StatefulWidget {
-  const AnimationScreen({Key? key}) : super(key: key);
+  final String phoneNumber;
+  const AnimationScreen({Key? key, required this.phoneNumber})
+      : super(key: key);
 
   @override
   State<AnimationScreen> createState() => _AnimationScreenState();
@@ -16,7 +18,9 @@ class _AnimationScreenState extends State<AnimationScreen> {
   void initState() {
     Timer(const Duration(seconds: 4), () {
       Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) => const HomeScreen()));
+          builder: (BuildContext context) => HomeScreen(
+                phoneNumber: widget.phoneNumber,
+              )));
     });
 
     super.initState();

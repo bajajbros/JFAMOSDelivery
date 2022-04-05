@@ -1,18 +1,56 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:jfamosdelivery/Screens/animationscreen.dart';
 import 'package:jfamosdelivery/Screens/createpasswordscreen.dart';
 import 'package:jfamosdelivery/helper/consts.dart';
 import 'package:jfamosdelivery/helper/widgets.dart';
+import 'package:http/http.dart' as http;
+
+import 'forgetpassword.dart';
 
 class PasswordScreen extends StatefulWidget {
-  const PasswordScreen({Key? key}) : super(key: key);
+  final String phoneNumber;
+  const PasswordScreen({Key? key, required this.phoneNumber}) : super(key: key);
 
   @override
   State<PasswordScreen> createState() => _PasswordScreenState();
 }
 
 class _PasswordScreenState extends State<PasswordScreen> {
+  Future checkPassword() async {
+    String phoneNumber = widget.phoneNumber;
+    String data;
+    String password = controller.text;
+    var passwordAPI =
+        'http://www.jfamoslogistics.com/APIs/APIs2.asmx/LoginwithPassword?mobile=$phoneNumber&password=$password';
+    http.Response response = await http.get(
+      Uri.parse(passwordAPI),
+    );
+    if (response.statusCode == 200) {
+      data = (response.body);
+      print(data);
+      var msg = jsonDecode(data)['message'];
+      if (msg == "Password Correct.") {
+        print('hi');
+        return Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AnimationScreen(
+              phoneNumber: widget.phoneNumber,
+            ),
+          ),
+        );
+      } else {
+        return const Text('enter a valid password');
+      }
+    } else {
+      print(response.statusCode);
+      return (response.statusCode);
+    }
+  }
+
   bool _obsureText = true;
   TextEditingController controller = TextEditingController();
   @override
@@ -35,6 +73,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
         body: Column(
           children: [
             customTextField(
+                controller: controller,
                 suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
@@ -88,11 +127,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
             const Spacer(),
             customRoundedButton(
                 text: 'Continue',
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const AnimationScreen()));
+                onPressed: () async {
+                  await checkPassword();
                 }),
             const SizedBox(height: 40),
             //add a textfield
@@ -138,8 +174,9 @@ class _PasswordScreenState extends State<PasswordScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                const CreatePasswordScreen()));
+                            builder: (context) => ForgetPasswordScreen(
+                                  phoneNumber: widget.phoneNumber,
+                                )));
                   }),
               const SizedBox(height: 30),
             ],

@@ -10,9 +10,11 @@ import 'package:jfamosdelivery/Screens/drawer/profile.dart';
 import 'package:jfamosdelivery/Screens/drawer/promotions.dart';
 import 'package:jfamosdelivery/Screens/drawer/termsandconditions.dart';
 import 'package:jfamosdelivery/Screens/mapscreen.dart';
+import 'package:jfamosdelivery/helper/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final String phoneNumber;
+  const HomeScreen({Key? key, required this.phoneNumber}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -20,8 +22,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  // ignore: unused_field
   bool _isOpened = false;
   double topContainerHeight = 0.3;
 
@@ -105,7 +105,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const PaymentScreen()));
+                        builder: (context) => PaymentScreen(
+                              phoneNumber: widget.phoneNumber,
+                            )));
               },
             ),
             ListTile(
@@ -293,29 +295,42 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         BottomDrawer(
-          callback: ((opened) {
-            setState(() {
-              _isOpened = opened;
-            });
-          }),
+          callback: (opened) {
+            _isOpened ? opened = true : false;
+          },
           cornerRadius: 24,
-          header: Expanded(
-            child: Container(
-              height: 3,
-              width: 15,
-              decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  topRight: Radius.circular(24),
+          header: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
                 ),
+                width: MediaQuery.of(context).size.width * 0.1,
+                height: MediaQuery.of(context).size.width * 0.015,
               ),
             ),
           ),
-          body: Column(
-            children: const [Text('hi'), Text('hi')],
+          body: customTextField(
+            onTap: () {
+              setState(() {
+                _isOpened = true;
+              });
+            },
+            keyboardType: TextInputType.streetAddress,
+            hintText: 'Where to',
+            prefixIcon: Padding(
+              padding: const EdgeInsets.all(12),
+              child: CircleAvatar(
+                backgroundColor: Colors.grey[300],
+                foregroundColor: Colors.white,
+                child: const Icon(Icons.search,
+                    color: Color.fromARGB(221, 0, 0, 0)),
+              ),
+            ),
           ),
-          headerHeight: MediaQuery.of(context).size.height * 0.25,
+          headerHeight: MediaQuery.of(context).size.height * 0.16,
           drawerHeight: MediaQuery.of(context).size.height * 0.75,
           color: Colors.white,
           boxShadow: [

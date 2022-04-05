@@ -47,6 +47,9 @@ dependencies:
   geolocator: ^8.2.0
   bottom_drawer: ^0.0.5
   permission_handler: ^9.2.0
+  concentric_transition: ^1.0.1+1
+  flutter_credit_card: ^3.0.1
+  month_year_picker: ^0.1.0+1
 
 dev_dependencies:
   flutter_test:

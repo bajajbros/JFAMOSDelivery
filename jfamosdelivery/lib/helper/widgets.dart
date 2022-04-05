@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:jfamosdelivery/helper/consts.dart';
 
 Widget customTextField({
+  bool errorText = false,
+  String? errorTextMessage,
+  String Function(String?)? validator,
+  Function? onTap,
+  TextEditingController? controller,
   double leftPadding = 30,
   double rightPadding = 30,
   required TextInputType keyboardType,
@@ -13,6 +18,7 @@ Widget customTextField({
   return Padding(
     padding: EdgeInsets.only(left: leftPadding, right: rightPadding),
     child: TextFormField(
+      controller: controller,
       obscureText: obsureText,
       enabled: true,
       keyboardType: keyboardType,
@@ -22,6 +28,11 @@ Widget customTextField({
           fontFamily: 'fredoka',
           fontWeight: FontWeight.normal),
       decoration: InputDecoration(
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.red, width: 2),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        errorText: errorText ? errorTextMessage : null,
         suffixIcon: suffixIcon,
         prefixIconColor: Colors.black,
         border: OutlineInputBorder(
@@ -44,6 +55,42 @@ Widget customTextField({
       ),
     ),
   );
+}
+
+InputDecoration customInputDecoration({
+  String? errorTextMessage,
+  required String hintText,
+  required Widget prefixIcon,
+  Widget? suffixIcon,
+  bool errorText = false,
+}) {
+  var inputDecoration = InputDecoration(
+    errorBorder: OutlineInputBorder(
+      borderSide: const BorderSide(color: Colors.red, width: 2),
+      borderRadius: BorderRadius.circular(12),
+    ),
+    errorText: errorText ? errorTextMessage : null,
+    suffixIcon: suffixIcon,
+    prefixIconColor: Colors.black,
+    border: OutlineInputBorder(
+      borderSide: const BorderSide(color: kGreenColor, width: 2),
+      borderRadius: BorderRadius.circular(12),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderSide: const BorderSide(color: kGreenColor, width: 2),
+      borderRadius: BorderRadius.circular(12),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderSide: const BorderSide(color: kGreenColor, width: 2),
+      borderRadius: BorderRadius.circular(12),
+    ),
+    filled: true,
+    hintStyle: const TextStyle(color: Colors.black38, fontSize: 20),
+    hintText: hintText,
+    fillColor: Colors.grey[200],
+    prefixIcon: prefixIcon,
+  );
+  return inputDecoration;
 }
 
 Widget customRoundedButton(
