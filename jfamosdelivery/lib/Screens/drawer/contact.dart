@@ -18,9 +18,9 @@ class _ContactState extends State<Contact> {
     var data = await http.get(Uri.parse(api));
 
     if (data.statusCode == 200) {
-      print(data.body);
+      // print(data.body);
       String detail = await jsonDecode(data.body)[0]['cdetail'];
-      print(detail);
+      // print(detail);
       return detail;
     } else {
       throw Exception('Failed to load data, statusCode: ${data.statusCode}');

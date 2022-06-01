@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:jfamosdelivery/Screens/animationscreen.dart';
-import 'package:jfamosdelivery/Screens/createpasswordscreen.dart';
 import 'package:jfamosdelivery/helper/consts.dart';
 import 'package:jfamosdelivery/helper/widgets.dart';
 import 'package:http/http.dart' as http;
@@ -30,10 +29,10 @@ class _PasswordScreenState extends State<PasswordScreen> {
     );
     if (response.statusCode == 200) {
       data = (response.body);
-      print(data);
+      // print(data);
       var msg = jsonDecode(data)['message'];
       if (msg == "Password Correct.") {
-        print('hi');
+        // print('hi');
         return Navigator.push(
           context,
           MaterialPageRoute(
@@ -46,7 +45,6 @@ class _PasswordScreenState extends State<PasswordScreen> {
         return const Text('enter a valid password');
       }
     } else {
-      print(response.statusCode);
       return (response.statusCode);
     }
   }

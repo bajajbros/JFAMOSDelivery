@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:jfamosdelivery/Screens/authscreen.dart';
+import 'package:jfamosdelivery/Screens/homescreen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +18,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: const AuthScreen(),
+        home: const HomeScreen(
+          phoneNumber: '9354954343',
+        ),
       ),
     );
   }

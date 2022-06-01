@@ -40,7 +40,7 @@ class _AuthScreenState extends State<AuthScreen> {
     );
     if (response.statusCode == 200) {
       data = (response.body);
-      print(data);
+      // print(data);
       var msg = jsonDecode(data)['message'];
       if (msg == 'Login Failed.') {
         Navigator.push(
@@ -210,7 +210,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   image: Image.asset('assets/images/googlelogoo.png'),
                   text: 'SignIn with Google',
                   onPressed: () {
-                    print('hi');
+                    // print('hi');
                   }),
               const SizedBox(
                 height: 20,

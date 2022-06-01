@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:jfamosdelivery/Screens/authscreen.dart';
 import 'package:jfamosdelivery/Screens/onboardingscreens.dart';
 import 'package:jfamosdelivery/backend/apis.dart';
 import 'package:jfamosdelivery/helper/consts.dart';
@@ -18,14 +17,14 @@ class _SplashScreenState extends State<SplashScreen> {
   getImageName() async {
     var data = await splashScreenData();
     var imageName = jsonDecode(data.toString())[0]['simage'];
-    print(imageName);
+    // print(imageName);
     return imageName;
   }
 
   getDuration() async {
     var data = await splashScreenData();
     var duration = jsonDecode(data.toString())[0]['sDuration'];
-    print(duration);
+    // print(duration);
     return int.parse(duration);
   }
 

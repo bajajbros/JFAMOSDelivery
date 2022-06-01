@@ -121,7 +121,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                     fontSize: 20,
                                     fontWeight: FontWeight.w400,
                                     color: position == 2
-                                        ? Color.fromARGB(220, 255, 255, 255)
+                                        ? const Color.fromARGB(
+                                            220, 255, 255, 255)
                                         : Colors.black,
                                     fontFamily: 'fredoka'),
                               )

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:jfamosdelivery/Screens/drawer/payment/paymentscreen.dart';
 import 'package:jfamosdelivery/backend/apis.dart';
 import 'package:jfamosdelivery/helper/consts.dart';
 import 'package:jfamosdelivery/helper/widgets.dart';
@@ -47,13 +48,13 @@ class _AddCardState extends State<AddCard> {
   }
 
   Future sendData() async {
-    String phoneNumber = widget.phoneNumber;
+    // String phoneNumber = widget.phoneNumber;
     String api =
         'http://www.jfamoslogistics.com/APIs/APIs2.asmx/InsertPayment?usercontactno=${widget.phoneNumber}&userhname=$cardHolderName&usercardno=$cardNumber&usersecurecode=$cvvCode&userexpirycode=$expiryDate';
     var response = await getData(api: api);
-    print(response);
-    print(
-        'CardHolderName: $cardHolderName, cardNumber: $cardNumber, cvvCode: $cvvCode, expiryDate: $expiryDate, phoneNumber: $phoneNumber');
+    // print(response);
+    // print(
+    //     'CardHolderName: $cardHolderName, cardNumber: $cardNumber, cvvCode: $cvvCode, expiryDate: $expiryDate, phoneNumber: $phoneNumber');
     return response;
   }
 
@@ -155,6 +156,15 @@ class _AddCardState extends State<AddCard> {
                       text: 'Add Card',
                       onPressed: () async {
                         await sendData();
+                        setState(() {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PaymentScreen(
+                                  phoneNumber: widget.phoneNumber),
+                            ),
+                          );
+                        });
                       },
                     ),
                   ],

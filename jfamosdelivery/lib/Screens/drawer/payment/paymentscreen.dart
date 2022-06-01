@@ -18,12 +18,13 @@ class PaymentScreen extends StatefulWidget {
 class _PaymentScreenState extends State<PaymentScreen> {
   int? cardID;
   Future delereCard() async {
-    var id = await cardID;
-    print(id);
+    var id = cardID;
+    // print(id);
     var response = await getData(
         api:
             'http://www.jfamoslogistics.com/APIs/APIs2.asmx/DeletePayment?id=$id&usercontactno=${widget.phoneNumber}');
-    print(response);
+    // print(response);
+    setState(() {});
     return response;
   }
 
@@ -99,7 +100,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                             child: const Text('Delete'),
                                             onPressed: () async {
                                               await delereCard();
+                                              await getCreditCards();
                                               Navigator.pop(context);
+                                              setState(() {
+                                                futureData = getCreditCards();
+                                              });
                                             },
                                           ),
                                         ],
